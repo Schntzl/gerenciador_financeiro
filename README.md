@@ -1,6 +1,6 @@
 # Projeto gerenciador financeiro
 
-**Autor:** Jôáo
+**Autores:** Jôáo, Ella e Raissa Poqueno
 
 ### Descrição do projeto
 
