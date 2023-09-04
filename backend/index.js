@@ -2,26 +2,25 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.json());
+
 app.listen(666, () => console.log("Hades."));
 
-app.get("/", (req, res) => {
-  res.send("Pode entrar.");
+const mysql = require("mysql2/promise");
+const conection = mysql.createPool({
+  host: "localhost",
+  port: 3306,
+  databese: "testepessoa",
+  user: "root",
+  password: "",
 });
 
-app.get("/cachorro", (req, res) => {
-  res.send("AuAu.");
-});
+const getAllPessoas = async () => {
+  const [query] = await conection.execute("select * from pessoa");
+  return query;
+};
 
-app.get("/aomosso", (req, res) => {
-  res.send("Ja podih ao mossar?");
-});
-
-app.get("/fim", (req, res) => {
-  res.end();
-});
-
-const dados = ["Jôáo"];
-
-app.get("/j", (req, res) => {
-  res.json({ dados });
+app.get("/pessoa", async (req, res) => {
+  const resultado = await getAllPessoas();
+  return res.status(200).json(resultado);
 });
